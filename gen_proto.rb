@@ -3,11 +3,17 @@
 
 def gen_proto
    valid_suffixes = [
-      'rb'
+      "rb",
+      "cpp",
    ]
+   templates = [
+      "rb.erb",
+      "cpp.erb",
+   ]
+ 
 
    debug = true
-   
+
    if ARGV.empty?
       puts "Error: No filename"
       exit
@@ -16,20 +22,7 @@ def gen_proto
    end
    puts "filename is #{filename}" if debug
 
-   suffix = filename.split('.')[1]
-
-   if suffix.nil?
-      puts "No suffix detected in #{filename}"
-      exit
-   else
-      puts "filename suffix is #{suffix}" if debug
-
-      if valid_suffixes.include? suffix
-         puts "Suffix #{suffix} is valid" if debug
-      else
-         puts "Suffix #{suffix} is not valid"
-      end
-   end
+   t_map = valid_suffixes.each_with_index.map{ |suffix, idx| [suffix, templates[idx]] }
 
 end
 
