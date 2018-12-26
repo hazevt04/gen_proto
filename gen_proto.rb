@@ -1,5 +1,18 @@
 #!/usr/bin/env ruby
+ require "erb"
 
+class Program
+   attr_accessor :basename
+  
+   def initialize(basename)
+      @basename = basename
+   end
+
+   # Expose private binding() method 
+   def get_binding
+      binding()
+   end
+end
 
 def gen_proto
    valid_suffixes = [
@@ -25,11 +38,17 @@ def gen_proto
    puts "filename is #{filename}" if debug
 
    tsuffix = filename.split('.')[1]
-   
+   tprefix = filename.split('.')[0]
+
    if tsuffix
       tfilename = ziphash["#{tsuffix}"]
       if tfilename
-         puts "template filename is #{tfilename}"
+         puts "Template filename is #{tfilename}" if debug
+
+         program = Program.new(tprefix)
+         renderer = ERB.new(File.read(tfilename))
+         puts output = renderer.result(program.get_binding)
+
       else
          puts "No template found for #{filename} "
          puts "(Suffix .#{tsuffix} not recognized.)"
