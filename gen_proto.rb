@@ -11,8 +11,10 @@ def gen_proto
       "cpp.erb",
    ]
  
+   zip = valid_suffixes.zip(templates)
+   ziphash = Hash[zip]
 
-   debug = true
+   debug = false
 
    if ARGV.empty?
       puts "Error: No filename"
@@ -22,7 +24,19 @@ def gen_proto
    end
    puts "filename is #{filename}" if debug
 
-   t_map = valid_suffixes.each_with_index.map{ |suffix, idx| [suffix, templates[idx]] }
+   tsuffix = filename.split('.')[1]
+   
+   if tsuffix
+      tfilename = ziphash["#{tsuffix}"]
+      if tfilename
+         puts "template filename is #{tfilename}"
+      else
+         puts "No template found for #{filename} "
+         puts "(Suffix .#{tsuffix} not recognized.)"
+      end
+   else
+      puts "No template for #{filename}"
+   end
 
 end
 
