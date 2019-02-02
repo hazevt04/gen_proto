@@ -21,14 +21,14 @@ end
 
 def gen_proto
    valid_suffixes = [
-      "class_cpp",
-      "class_h",
+      "class.cpp",
+      "class.h",
       "cpp",
       "rb"
    ]
    templates = [
-      "class_cpp.erb",
-      "class_h.erb",
+      "class.cpp.erb",
+      "class.h.erb",
       "cpp.erb",
       "rb.erb"
    ]
@@ -46,9 +46,17 @@ def gen_proto
    end
    puts "filename is #{filename}" if debug
 
-   tsuffix = filename.split('.').last
+   if filename.split('.').size == 2
+      tsuffix = filename.split('.')[1] 
+   elsif filename.split('.').size == 3
+      tsuffix = filename.split('.')[1] + "." + filename.split('.')[2] 
+   else
+      puts "No suffix found in #{filename} "
+      exit
+   end
 
    if tsuffix
+      puts "tsuffix is #{tsuffix}" if debug
       tfilename = "templates/" + ziphash["#{tsuffix}"]
       if tfilename
          puts "Template filename is #{tfilename}" if debug
