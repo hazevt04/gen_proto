@@ -36,7 +36,7 @@ def gen_proto
    zip = valid_suffixes.zip(templates)
    ziphash = Hash[zip]
 
-   debug = false
+   debug = true
 
    if ARGV.empty?
       puts "Error: No filename"
@@ -57,12 +57,13 @@ def gen_proto
 
    if tsuffix
       puts "tsuffix is #{tsuffix}" if debug
-      tfilename = "templates/" + ziphash["#{tsuffix}"]
+      tfilename = ziphash["#{tsuffix}"]
       if tfilename
+         tfilepath = "/usr/bin/gen_proto/templates/" + tfilename
          puts "Template filename is #{tfilename}" if debug
 
          program = Program.new(filename)
-         renderer = ERB.new(File.read(tfilename))
+         renderer = ERB.new(File.read(tfilepath))
          puts output = renderer.result(program.get_binding)
 
       else
