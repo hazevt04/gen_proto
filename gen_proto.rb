@@ -36,7 +36,7 @@ def gen_proto
    zip = valid_suffixes.zip(templates)
    ziphash = Hash[zip]
 
-   debug = true
+   debug = false
 
    if ARGV.empty?
       puts "Error: No filename"
@@ -50,28 +50,19 @@ def gen_proto
       tsuffix = filename.split('.')[1] 
    elsif filename.split('.').size == 3
       tsuffix = filename.split('.')[1] + "." + filename.split('.')[2] 
-   else
-      puts "No suffix found in #{filename} "
-      exit
    end
 
    if tsuffix
       puts "tsuffix is #{tsuffix}" if debug
       tfilename = ziphash["#{tsuffix}"]
       if tfilename
-         tfilepath = "/usr/bin/gen_proto/templates/" + tfilename
-         puts "Template filename is #{tfilename}" if debug
+         tfilepath = __dir__ + "/templates/" + tfilename
+         puts "Template file path is #{tfilepath}" if debug
 
          program = Program.new(filename)
          renderer = ERB.new(File.read(tfilepath))
          puts output = renderer.result(program.get_binding)
-
-      else
-         puts "No template found for #{filename} "
-         puts "(Suffix .#{tsuffix} not recognized.)"
       end
-   else
-      puts "No template for #{filename}"
    end
 
 end
