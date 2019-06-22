@@ -24,13 +24,15 @@ def gen_proto
       "class.cpp",
       "class.h",
       "cpp",
-      "rb"
+      "rb",
+      "c"
    ]
    templates = [
       "class.cpp.erb",
       "class.h.erb",
       "cpp.erb",
-      "rb.erb"
+      "rb.erb",
+      "c.erb"
    ]
  
    zip = valid_suffixes.zip(templates)
