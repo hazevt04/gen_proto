@@ -25,6 +25,7 @@ def gen_proto
       "class.h",
       "cpp",
       "rb",
+      "py",
       "c"
    ]
    templates = [
@@ -32,6 +33,7 @@ def gen_proto
       "class.h.erb",
       "cpp.erb",
       "rb.erb",
+      "py.erb",
       "c.erb"
    ]
  
