@@ -4,13 +4,13 @@
 class Program
    attr_accessor :basename
    attr_accessor :classname
-   attr_accessor :header_defines
+   attr_accessor :header_define
 
    def initialize(filename)
       basename = filename.split('.').first
       @basename = basename
       @classname = basename.slice(0,1).capitalize + basename.slice(1..-1)
-      @header_defines = '_' + basename.gsub('.','_').upcase + '_H_'
+      @header_define = '__' + basename.gsub('.','_').upcase + '_H__'
    end
 
    # Expose private binding() method 
@@ -26,7 +26,8 @@ def gen_proto
       "cpp",
       "rb",
       "py",
-      "c"
+      "c",
+      "h"
    ]
    templates = [
       "class.cpp.erb",
@@ -34,7 +35,8 @@ def gen_proto
       "cpp.erb",
       "rb.erb",
       "py.erb",
-      "c.erb"
+      "c.erb",
+      "h.erb"
    ]
  
    zip = valid_suffixes.zip(templates)
@@ -60,7 +62,7 @@ def gen_proto
       puts "tsuffix is #{tsuffix}" if debug
       tfilename = ziphash["#{tsuffix}"]
       if tfilename
-         tfilepath = __dir__ + "/templates/" + tfilename
+         tfilepath = __dir__ + "/gen_proto_templates/" + tfilename
          puts "Template file path is #{tfilepath}" if debug
 
          program = Program.new(filename)
