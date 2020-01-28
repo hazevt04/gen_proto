@@ -48,10 +48,11 @@ def gen_proto
       puts "Error: No filename"
       exit
    else
-      filename=ARGV[0]
+      new_file_path=ARGV[0]
    end
-   puts "filename is #{filename}" if debug
+   puts "new_file_path is #{new_file_path}" if debug
 
+   filename = new_file_path.split('/')[-1]
    if filename.split('.').size == 2
       tsuffix = filename.split('.')[1] 
    elsif filename.split('.').size == 3
